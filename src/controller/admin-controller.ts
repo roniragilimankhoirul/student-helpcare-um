@@ -6,7 +6,7 @@ export class AdminController {
   static async register(req: Request, res: Response, next: NextFunction) {
     try {
       await AdminService.register(req.body as AdminRequest);
-      res.json({ message: "Registration success" });
+      res.status(200).json({ message: "Registration success" });
     } catch (e) {
       next(e);
     }
@@ -14,7 +14,7 @@ export class AdminController {
   static async login(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await AdminService.login(req.body as AdminLoginRequest);
-      res.json({ data: result });
+      res.status(200).json({ data: result });
     } catch (e) {
       next(e);
     }

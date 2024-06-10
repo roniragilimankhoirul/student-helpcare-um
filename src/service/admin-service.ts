@@ -57,7 +57,7 @@ export class AdminService {
     }
   }
   static async login(request: AdminLoginRequest) {
-    const requestAdmin = Validation.validate(AdminValidation.login, request);
+    const requestAdmin = Validation.validate(AdminValidation.LOGIN, request);
     try {
       const apiKey = process.env.API_KEY;
       const response = await fetch(
