@@ -7,4 +7,8 @@ export class AdminValidation {
     password: z.string().min(6).max(100),
     id_school: z.string().max(100),
   });
+  static readonly login: ZodType = z.object({
+    email: z.string().email().max(100),
+    password: z.string().min(6).max(100),
+  });
 }

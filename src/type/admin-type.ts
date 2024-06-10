@@ -4,3 +4,8 @@ export type AdminRequest = {
   password: string;
   id_school: string;
 };
+
+export type AdminLoginRequest = {
+  email: string;
+  password: string;
+};

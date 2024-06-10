@@ -3,3 +3,4 @@ import { AdminController } from "../controller/admin-controller";
 
 export const publicRouter = express.Router();
 publicRouter.post("/api/admin", AdminController.register);
+publicRouter.post("/api/admin/login", AdminController.login);
