@@ -1,6 +1,7 @@
 import { firebaseAdmin } from "../config/firebase";
 import { ResponseError } from "../error/response-error";
 import { Validation } from "../helper/validation";
+import { User } from "../model/user";
 import { UserRepositoryImpl } from "../repository/user-repository-impl";
 import { UserCreateRequest, UserLoginRequest } from "../type/user-type";
 import { UserValidation } from "../validation/user-validation";
@@ -88,6 +89,15 @@ export class UserService {
     } catch (error: any) {
       console.error("Error logging in:", error.message);
       throw new Error("Login failed");
+    }
+  }
+  static async get(request: string): Promise<User | null> {
+    const userRepositoryImpl = new UserRepositoryImpl();
+    try {
+      return userRepositoryImpl.findById(request);
+    } catch (error) {
+      console.error("Error fetching schools:", error);
+      throw new ResponseError(500, "Internal Server Error");
     }
   }
 }

@@ -19,6 +19,9 @@ export class AdminService {
           requestAdmin.name
         )}`,
       });
+      await firebaseAdmin
+        .auth()
+        .setCustomUserClaims(firebaseRecord.uid, { admin: true });
       const adminRepositoryImpl = new AdminRepositoryImpl();
       await adminRepositoryImpl.create({
         id: firebaseRecord.uid,
