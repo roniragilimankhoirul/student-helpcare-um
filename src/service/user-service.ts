@@ -2,7 +2,7 @@ import { firebaseAdmin } from "../config/firebase";
 import { ResponseError } from "../error/response-error";
 import { Validation } from "../helper/validation";
 import { UserRepositoryImpl } from "../repository/user-repository-impl";
-import { UserCreateRequest } from "../type/user-type";
+import { UserCreateRequest, UserLoginRequest } from "../type/user-type";
 import { UserValidation } from "../validation/user-validation";
 export class UserService {
   static async register(request: UserCreateRequest): Promise<void> {
@@ -53,6 +53,41 @@ export class UserService {
 
       console.error("Error registering admin:", error);
       throw new ResponseError(500, "Internal Server Error");
+    }
+  }
+  static async login(request: UserLoginRequest) {
+    const requestUser = Validation.validate(UserValidation.LOGIN, request);
+    try {
+      const apiKey = process.env.API_KEY;
+      const response = await fetch(
+        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: requestUser.email,
+            password: requestUser.password,
+            returnSecureToken: true,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to login: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.idToken) {
+        throw new Error("ID token not found in response");
+      }
+
+      return { token: data.idToken };
+    } catch (error: any) {
+      console.error("Error logging in:", error.message);
+      throw new Error("Login failed");
     }
   }
 }
