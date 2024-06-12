@@ -15,4 +15,15 @@ export class ComplaintController {
       next(e);
     }
   }
+  static async get(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const id = req.user as string;
+      const result = await ComplaintService.get(id);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

@@ -8,3 +8,4 @@ export const router = express.Router();
 router.get("/api/users/profile", authUserMiddleware, UserController.get);
 //COMPLAINT
 router.post("/api/complaints", authUserMiddleware, ComplaintController.create);
+router.get("/api/complaints", authUserMiddleware, ComplaintController.get);
