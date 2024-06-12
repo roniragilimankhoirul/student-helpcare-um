@@ -28,4 +28,12 @@ export class ComplaintService {
     const complaintRepositoryImpl = new ComplaintRepositoryImpl();
     return await complaintRepositoryImpl.findAll(getComplaintRequest);
   }
+  static async getById(id: string): Promise<Complaint | null> {
+    const getByIdComplaintRequest = Validation.validate(
+      ComplaintValidation.GETBYID,
+      id
+    );
+    const complaintRepositoryImpl = new ComplaintRepositoryImpl();
+    return await complaintRepositoryImpl.findById(getByIdComplaintRequest);
+  }
 }

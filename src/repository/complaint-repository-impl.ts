@@ -16,7 +16,13 @@ export class ComplaintRepositoryImpl implements ComplaintRepository {
     const result = await pool.query(query, [id_user]);
     return result.rows as Complaint[];
   }
-  findById(id: string): Promise<Complaint | null> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<Complaint | null> {
+    const result = await pool.query("SELECT * FROM complaints WHERE id = $1", [
+      id,
+    ]);
+    if (result.rows.length === 0) {
+      return null;
+    }
+    return result.rows[0] as Complaint;
   }
 }

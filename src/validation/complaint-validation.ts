@@ -7,7 +7,5 @@ export class ComplaintValidation {
     description: z.string().min(1).max(100),
   });
   static readonly GET: ZodType = z.string().max(100);
-  //   static readonly GETBYID: ZodType = z.object({
-  //     z.string().max(100);
-  //   })
+  static readonly GETBYID: ZodType = z.string().max(100);
 }

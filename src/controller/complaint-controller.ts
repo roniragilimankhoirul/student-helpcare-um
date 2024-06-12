@@ -26,4 +26,15 @@ export class ComplaintController {
       next(e);
     }
   }
+  static async getById(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id as string;
+      const result = await ComplaintService.getById(id);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
