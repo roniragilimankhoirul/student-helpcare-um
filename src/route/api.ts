@@ -18,3 +18,8 @@ router.get(
 );
 // ADMIN
 router.get("/api/admin/profile", authAdminMiddleware, AdminController.get);
+router.get(
+  "/api/admin/complaints",
+  authAdminMiddleware,
+  ComplaintController.getAllBySchool
+);

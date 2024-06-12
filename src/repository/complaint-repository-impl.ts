@@ -24,7 +24,7 @@ export class ComplaintRepositoryImpl implements ComplaintRepository {
   async findByAllBySchool(id_school: string): Promise<Complaint[]> {
     const query = `SELECT u.name, u.email, c.description, c.is_responded, c.comment
 FROM users AS u
-JOIN complaints AS c ON u.id = c.id_user WHERE u.id_school=$`;
+JOIN complaints AS c ON u.id = c.id_user WHERE u.id_school=$1`;
     const result = await pool.query(query, [id_school]);
     return result.rows as Complaint[];
   }

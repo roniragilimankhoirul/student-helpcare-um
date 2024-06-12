@@ -3,6 +3,7 @@ import { ComplaintRepositoryImpl } from "../repository/complaint-repository-impl
 import { CreateComplaintRequest } from "../type/complaint-type";
 import { ComplaintValidation } from "../validation/complaint-validation";
 import { Complaint } from "../model/complaint";
+import { AdminRepositoryImpl } from "../repository/admin-repository-impl";
 
 export class ComplaintService {
   static async create(
@@ -34,5 +35,15 @@ export class ComplaintService {
     );
     const complaintRepositoryImpl = new ComplaintRepositoryImpl();
     return await complaintRepositoryImpl.findById(getByIdComplaintRequest);
+  }
+  static async getAllBySchool(id: string): Promise<Complaint[]> {
+    const getByIdComplaintRequest = Validation.validate(
+      ComplaintValidation.GETALLBYSCHOOL,
+      id
+    );
+    const adminRepositoryImpl = new AdminRepositoryImpl();
+    const admin = await adminRepositoryImpl.findById(id);
+    const complaintRepositoryImpl = new ComplaintRepositoryImpl();
+    return await complaintRepositoryImpl.findByAllBySchool(admin?.id_school!);
   }
 }

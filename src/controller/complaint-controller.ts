@@ -2,6 +2,7 @@ import { Response, NextFunction } from "express";
 import { ComplaintService } from "../service/complaint-service";
 import { CreateComplaintRequest } from "../type/complaint-type";
 import { UserRequest } from "../type/user-type";
+import { AdminRequest } from "../type/admin-type";
 export class ComplaintController {
   static async create(req: UserRequest, res: Response, next: NextFunction) {
     try {
@@ -30,6 +31,21 @@ export class ComplaintController {
     try {
       const id = req.params.id as string;
       const result = await ComplaintService.getById(id);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+  static async getAllBySchool(
+    req: AdminRequest,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const id = req.admin as string;
+      const result = await ComplaintService.getAllBySchool(id);
       res.status(200).json({
         data: result,
       });
