@@ -16,7 +16,6 @@ export class ComplaintService {
     const complaintRepositoryImpl = new ComplaintRepositoryImpl();
     await complaintRepositoryImpl.create({
       id_user: id,
-      complaint_type: createComplaintRequest.complaint_type,
       description: createComplaintRequest.description,
     });
   }

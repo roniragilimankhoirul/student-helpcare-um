@@ -1,13 +1,14 @@
 import { firebaseAdmin } from "../config/firebase";
 import { ResponseError } from "../error/response-error";
 import { Validation } from "../helper/validation";
+import { Admin } from "../model/admin";
 import { AdminRepositoryImpl } from "../repository/admin-repository-impl";
-import { AdminLoginRequest, AdminRequest } from "../type/admin-type";
+import { AdminLoginRequest, AdminCreateRequest } from "../type/admin-type";
 import { AdminValidation } from "../validation/admin-validation";
 import "dotenv/config";
 
 export class AdminService {
-  static async register(request: AdminRequest) {
+  static async register(request: AdminCreateRequest) {
     const requestAdmin = Validation.validate(AdminValidation.REGISTER, request);
     let firebaseRecord;
     try {
@@ -92,6 +93,15 @@ export class AdminService {
     } catch (error: any) {
       console.error("Error logging in:", error.message);
       throw new Error("Login failed");
+    }
+  }
+  static async get(request: string): Promise<Admin | null> {
+    const adminRepositoryImpl = new AdminRepositoryImpl();
+    try {
+      return adminRepositoryImpl.findById(request);
+    } catch (error) {
+      console.error("Error fetching schools:", error);
+      throw new ResponseError(500, "Internal Server Error");
     }
   }
 }
