@@ -13,3 +13,7 @@ publicRouter.get("/api/schools/:id", SchoolController.getById);
 // USER
 publicRouter.post("/api/users", UserController.register);
 publicRouter.post("/api/users/login", UserController.login);
+//HOME
+publicRouter.get("/", (req, res) => {
+  res.json({ message: "Hello Mom" });
+});
