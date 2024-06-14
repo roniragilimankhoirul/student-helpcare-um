@@ -25,7 +25,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.firebaseAdmin = void 0;
 const admin = __importStar(require("firebase-admin"));
-const serviceAccount = __importStar(require("../../student-helpcare-firebase-adminsdk.json"));
+// import * as serviceAccount from "../../student-helpcare-firebase-adminsdk.json";
+require("dotenv/config");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 exports.firebaseAdmin = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
