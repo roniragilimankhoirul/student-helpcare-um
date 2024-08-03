@@ -69,5 +69,21 @@ class ComplaintController {
             }
         });
     }
+    static update(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                const request = req.body;
+                request.id = id;
+                yield complaint_service_1.ComplaintService.update(request);
+                res.status(200).json({
+                    message: "Data updated successfully",
+                });
+            }
+            catch (e) {
+                next(e);
+            }
+        });
+    }
 }
 exports.ComplaintController = ComplaintController;

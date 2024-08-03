@@ -5,4 +5,5 @@ export interface ComplaintRepository {
   findAll(id_user: string): Promise<Complaint[]>;
   findById(id: string): Promise<Complaint | null>;
   findByAllBySchool(id_school: string): Promise<Complaint[]>;
+  update(comment: string, id:string): Promise<void>;
 }

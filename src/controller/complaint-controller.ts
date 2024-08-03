@@ -1,6 +1,6 @@
-import { Response, NextFunction } from "express";
+import {Response, NextFunction, request} from "express";
 import { ComplaintService } from "../service/complaint-service";
-import { CreateComplaintRequest } from "../type/complaint-type";
+import {CreateComplaintRequest, UpdateComplaintRequest} from "../type/complaint-type";
 import { UserRequest } from "../type/user-type";
 import { AdminRequest } from "../type/admin-type";
 export class ComplaintController {
@@ -48,6 +48,22 @@ export class ComplaintController {
       const result = await ComplaintService.getAllBySchool(id);
       res.status(200).json({
         data: result,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }  static async update(
+    req: AdminRequest,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const id = req.params.id as string;
+      const request = req.body as UpdateComplaintRequest
+      request.id=id;
+      await ComplaintService.update(request);
+      res.status(200).json({
+        message:"Data updated successfully",
       });
     } catch (e) {
       next(e);

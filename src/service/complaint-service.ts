@@ -1,9 +1,10 @@
 import { Validation } from "../helper/validation";
 import { ComplaintRepositoryImpl } from "../repository/complaint-repository-impl";
-import { CreateComplaintRequest } from "../type/complaint-type";
+import {CreateComplaintRequest, UpdateComplaintRequest} from "../type/complaint-type";
 import { ComplaintValidation } from "../validation/complaint-validation";
 import { Complaint } from "../model/complaint";
 import { AdminRepositoryImpl } from "../repository/admin-repository-impl";
+import {ResponseError} from "../error/response-error";
 
 export class ComplaintService {
   static async create(
@@ -45,5 +46,14 @@ export class ComplaintService {
     const admin = await adminRepositoryImpl.findById(id);
     const complaintRepositoryImpl = new ComplaintRepositoryImpl();
     return await complaintRepositoryImpl.findByAllBySchool(admin?.id_school!);
+  }
+
+  static async update(request: UpdateComplaintRequest):Promise<void>{
+    const req = Validation.validate(ComplaintValidation.UPDATE, request)
+    const complaintRepositoryImpl = new ComplaintRepositoryImpl();
+    const complaintInDatabase = await complaintRepositoryImpl.findById(request.id)
+    if(!complaintInDatabase){
+    throw new ResponseError(404, "Complaint Not Found")}
+    await  complaintRepositoryImpl.update(req.comment, req.id)
   }
 }

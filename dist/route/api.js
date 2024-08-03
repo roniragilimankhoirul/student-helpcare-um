@@ -20,3 +20,4 @@ exports.router.get("/api/complaints/:id", auth_user_middleware_1.authUserMiddlew
 // ADMIN
 exports.router.get("/api/admin/profile", auth_admin_middleware_1.authAdminMiddleware, admin_controller_1.AdminController.get);
 exports.router.get("/api/admin/complaints", auth_admin_middleware_1.authAdminMiddleware, complaint_controller_1.ComplaintController.getAllBySchool);
+exports.router.put("/api/admin/complaints/:id", auth_admin_middleware_1.authAdminMiddleware, complaint_controller_1.ComplaintController.update);

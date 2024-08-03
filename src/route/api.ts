@@ -23,3 +23,8 @@ router.get(
   authAdminMiddleware,
   ComplaintController.getAllBySchool
 );
+router.put(
+    "/api/admin/complaints/:id",
+    authAdminMiddleware,
+    ComplaintController.update
+);

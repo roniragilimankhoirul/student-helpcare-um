@@ -14,7 +14,7 @@ const database_1 = require("../application/database");
 class ComplaintRepositoryImpl {
     create(complaint) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = `INSERT INTO complaints (id_user,description) VALUES($1,$2,$3)`;
+            const query = `INSERT INTO complaints (id_user,description) VALUES($1,$2)`;
             const values = [complaint.id_user, complaint.description];
             yield database_1.pool.query(query, values);
         });
@@ -44,6 +44,13 @@ FROM users AS u
 JOIN complaints AS c ON u.id = c.id_user WHERE u.id_school=$1`;
             const result = yield database_1.pool.query(query, [id_school]);
             return result.rows;
+        });
+    }
+    update(comment, id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = `UPDATE complaints SET comment=$1, is_responded=TRUE WHERE id=$2`;
+            const values = [comment, id];
+            yield database_1.pool.query(query, values);
         });
     }
 }

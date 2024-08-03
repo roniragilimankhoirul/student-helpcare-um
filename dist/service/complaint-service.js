@@ -14,6 +14,7 @@ const validation_1 = require("../helper/validation");
 const complaint_repository_impl_1 = require("../repository/complaint-repository-impl");
 const complaint_validation_1 = require("../validation/complaint-validation");
 const admin_repository_impl_1 = require("../repository/admin-repository-impl");
+const response_error_1 = require("../error/response-error");
 class ComplaintService {
     static create(request, id) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -46,6 +47,17 @@ class ComplaintService {
             const admin = yield adminRepositoryImpl.findById(id);
             const complaintRepositoryImpl = new complaint_repository_impl_1.ComplaintRepositoryImpl();
             return yield complaintRepositoryImpl.findByAllBySchool(admin === null || admin === void 0 ? void 0 : admin.id_school);
+        });
+    }
+    static update(request) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const req = validation_1.Validation.validate(complaint_validation_1.ComplaintValidation.UPDATE, request);
+            const complaintRepositoryImpl = new complaint_repository_impl_1.ComplaintRepositoryImpl();
+            const complaintInDatabase = yield complaintRepositoryImpl.findById(request.id);
+            if (!complaintInDatabase) {
+                throw new response_error_1.ResponseError(404, "Complaint Not Found");
+            }
+            yield complaintRepositoryImpl.update(req.comment, req.id);
         });
     }
 }

@@ -1,6 +1,7 @@
 import pg from "pg";
 const { Pool } = pg;
 import "dotenv/config";
+import {string} from "zod";
 
 export const pool = new Pool({
   user: process.env.DB_USER,
@@ -13,6 +14,6 @@ export const pool = new Pool({
   connectionTimeoutMillis: 2000,
   ssl: {
     rejectUnauthorized: true,
-    // ca: '/path/to/ca.crt' (Optional: trusted CA certificate)
+  //   // ca: '/path/to/ca.crt' (Optional: trusted CA certificate)
   },
 });

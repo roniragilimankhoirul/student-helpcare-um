@@ -18,6 +18,6 @@ exports.pool = new Pool({
     connectionTimeoutMillis: 2000,
     ssl: {
         rejectUnauthorized: true,
-        // ca: '/path/to/ca.crt' (Optional: trusted CA certificate)
+        //   // ca: '/path/to/ca.crt' (Optional: trusted CA certificate)
     },
 });

@@ -3,7 +3,7 @@ import { Complaint } from "../model/complaint";
 import { ComplaintRepository } from "./complaint-repository";
 export class ComplaintRepositoryImpl implements ComplaintRepository {
   async create(complaint: Complaint): Promise<void> {
-    const query = `INSERT INTO complaints (id_user,description) VALUES($1,$2,$3)`;
+    const query = `INSERT INTO complaints (id_user,description) VALUES($1,$2)`;
     const values = [complaint.id_user, complaint.description];
     await pool.query(query, values);
   }
@@ -27,5 +27,11 @@ FROM users AS u
 JOIN complaints AS c ON u.id = c.id_user WHERE u.id_school=$1`;
     const result = await pool.query(query, [id_school]);
     return result.rows as Complaint[];
+  }
+
+  async update(comment: string, id:string): Promise<void> {
+    const query = `UPDATE complaints SET comment=$1, is_responded=TRUE WHERE id=$2`;
+    const values = [comment, id];
+    await pool.query(query, values);
   }
 }
