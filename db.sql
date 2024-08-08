@@ -33,7 +33,6 @@ CREATE TABLE users
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     primary key (id),
     constraint users_email_unique unique (email),
-    constraint users_id_school_unique unique (id_school),
     constraint fk_users_schools foreign key (id_school) references schools (id)
 );
 
@@ -53,3 +52,5 @@ CREATE TABLE complaints
 
 truncate admins
 truncate complaints, users
+ALTER TABLE users
+    DROP CONSTRAINT users_id_school_unique;

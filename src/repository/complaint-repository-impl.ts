@@ -22,14 +22,14 @@ export class ComplaintRepositoryImpl implements ComplaintRepository {
     return result.rows[0] as Complaint;
   }
   async findByAllBySchool(id_school: string): Promise<Complaint[]> {
-    const query = `SELECT u.name, u.email, c.description, c.is_responded, c.comment
+    const query = `SELECT c.id, u.name, u.email, c.description, c.is_responded, c.comment
 FROM users AS u
 JOIN complaints AS c ON u.id = c.id_user WHERE u.id_school=$1`;
     const result = await pool.query(query, [id_school]);
     return result.rows as Complaint[];
   }
 
-  async update(comment: string, id:string): Promise<void> {
+  async update(comment: string, id: string): Promise<void> {
     const query = `UPDATE complaints SET comment=$1, is_responded=TRUE WHERE id=$2`;
     const values = [comment, id];
     await pool.query(query, values);

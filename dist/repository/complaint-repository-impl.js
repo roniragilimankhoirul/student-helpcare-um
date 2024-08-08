@@ -39,7 +39,7 @@ class ComplaintRepositoryImpl {
     }
     findByAllBySchool(id_school) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = `SELECT u.name, u.email, c.description, c.is_responded, c.comment
+            const query = `SELECT c.id, u.name, u.email, c.description, c.is_responded, c.comment
 FROM users AS u
 JOIN complaints AS c ON u.id = c.id_user WHERE u.id_school=$1`;
             const result = yield database_1.pool.query(query, [id_school]);
